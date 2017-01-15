@@ -1,14 +1,21 @@
 #!/usr/bin/env python
+from __future__ import absolute_import
 import webapp2
 import jinja2
 import os
 import re
-import cgi
 from google.appengine.ext import db
 from google.appengine.ext import vendor
 
+# Add Folders to path.
 vendor.add("libs")
+vendor.add("Models")
+
 import hashing_utils
+from PostModel import PostModel
+from PostLike import PostLike
+from PostComment import PostComment
+from UserModel import UserModel
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir),
@@ -36,48 +43,6 @@ class Handle(webapp2.RequestHandler):
         if Validate.is_user_logged_in(username_cookie):
             user = UserModel.get_by_id(long(username_cookie.split("|")[0]))
         return user
-
-
-# Database Models
-class UserModel(db.Model):
-    """
-        Model for User.
-    """
-    username = db.StringProperty(required=True)
-    password = db.StringProperty(required=True)
-    email = db.StringProperty(required=False)
-
-
-class PostModel(db.Model):
-    """
-        Model for Post.
-    """
-    subject = db.StringProperty(required=True)
-    content = db.TextProperty(required=True)
-    timestamp = db.DateTimeProperty(auto_now_add=True)
-    post_creator = db.ReferenceProperty(UserModel, collection_name='posts')
-
-    def render(self):
-        self.content = cgi.escape(self.content, quote=True)
-        return self.content.replace('\n', '<br>')
-
-
-class PostLike(db.Model):
-    """
-        Model for a Like on a post.
-    """
-    post = db.ReferenceProperty(PostModel, collection_name='post_likes')
-    user = db.ReferenceProperty(UserModel, collection_name='posts_I_liked')
-
-
-class PostComment(db.Model):
-    """
-        Model for a Comment on a Post.
-    """
-    post = db.ReferenceProperty(PostModel, collection_name='post_comments')
-    user = db.ReferenceProperty(UserModel, collection_name='comments_I_made')
-    content = db.TextProperty(required=True)
-    timestamp = db.DateTimeProperty(auto_now_add=True)
 
 
 # Main Handler
@@ -115,7 +80,8 @@ class Validate(object):
 
     @staticmethod
     def is_user_logged_in(username_cookie):
-        return username_cookie is not None and hashing_utils.is_cookie_valid(username_cookie)
+        return username_cookie is not None and hashing_utils.is_cookie_valid(
+            username_cookie)
 
 
 class SignUp(Handle):
@@ -156,16 +122,21 @@ class SignUp(Handle):
             if users_with_username is not None:
                 errors.append("Username Already Exists")
             else:
-                user = UserModel(username=username, password=hashing_utils.hash_password(password), email=email)
+                user = UserModel(username=username,
+                                 password=hashing_utils.hash_password(
+                                     password), email=email)
                 user.put()
                 self.set_cookies(user)
                 self.redirect("/myprofile")
 
-        self.render("signup.html", errors=errors, user=self.get_logged_in_user())
+        self.render("signup.html", errors=errors,
+                    user=self.get_logged_in_user())
 
     def set_cookies(self, user):
         user_id = str(user.key().id())
-        self.response.set_cookie('username', hashing_utils.hash_cookie(user_id), max_age=2592000, path='/')
+        self.response.set_cookie('username',
+                                 hashing_utils.hash_cookie(user_id),
+                                 max_age=2592000, path='/')
 
 
 class Login(Handle):
@@ -189,11 +160,15 @@ class Login(Handle):
             self.redirect("/myprofile")
             self.set_cookies(user)
         else:
-            self.render("login.html", errors=["Wrong Username/Password combination."], user=self.get_logged_in_user())
+            self.render("login.html",
+                        errors=["Wrong Username/Password combination."],
+                        user=self.get_logged_in_user())
 
     def set_cookies(self, user):
         user_id = str(user.key().id())
-        self.response.set_cookie('username', hashing_utils.hash_cookie(user_id), max_age=2592000, path='/')
+        self.response.set_cookie('username',
+                                 hashing_utils.hash_cookie(user_id),
+                                 max_age=2592000, path='/')
 
 
 class LogoutHandler(Handle):
@@ -238,7 +213,8 @@ class NewPostHandler(Handle):
         subject = self.request.get('subject')
         content = self.request.get('content')
 
-        if not Validate.is_user_logged_in(self.request.cookies.get('username')):
+        if not Validate.is_user_logged_in(
+                self.request.cookies.get('username')):
             self.redirect("/login")
         else:
             errors = []
@@ -247,11 +223,13 @@ class NewPostHandler(Handle):
             if not content:
                 errors.append("Post must have a desc.")
             if subject and content:
-                post = PostModel(subject=subject, content=content, post_creator=self.get_logged_in_user())
+                post = PostModel(subject=subject, content=content,
+                                 post_creator=self.get_logged_in_user())
                 post.put()
                 self.redirect("/" + str(post.key().id()))
             else:
-                self.render("newpost.html", subject=subject, content=content, errors=errors,
+                self.render("newpost.html", subject=subject, content=content,
+                            errors=errors,
                             user=self.get_logged_in_user())
 
 
@@ -265,7 +243,8 @@ class EditPostHandler(Handle):
         if post:
             post_creator_id = post.post_creator.key().id()
             if self.get_logged_in_user().key().id() == post_creator_id:
-                self.render("editpost.html", post=post, user=self.get_logged_in_user())
+                self.render("editpost.html", post=post,
+                            user=self.get_logged_in_user())
             else:
                 self.redirect("/")
         else:
@@ -279,22 +258,27 @@ class EditPostHandler(Handle):
         if not post:
             self.redirect("/")
         else:
-            errors = []
-            if not subject:
-                errors.append("Post must have a title.")
+            post_creator_id = post.post_creator.key().id()
+            if self.get_logged_in_user().key().id() != post_creator_id:
+                self.redirect("/")
             else:
-                post.subject = subject
+                errors = []
+                if not subject:
+                    errors.append("Post must have a title.")
+                else:
+                    post.subject = subject
 
-            if not content:
-                errors.append("Post must have a desc.")
-            else:
-                post.content = content
+                if not content:
+                    errors.append("Post must have a desc.")
+                else:
+                    post.content = content
 
-            if subject and content:
-                post.put()
-                self.redirect("/" + str(post.key().id()))
-            else:
-                self.render("editpost.html", post=post, errors=errors, user=self.get_logged_in_user())
+                if subject and content:
+                    post.put()
+                    self.redirect("/" + str(post.key().id()))
+                else:
+                    self.render("editpost.html", post=post, errors=errors,
+                                user=self.get_logged_in_user())
 
 
 class DeletePostHandler(Handle):
@@ -322,15 +306,19 @@ class LikePostHandler(Handle):
 
     def get(self, post_id):
         post = PostModel.get_by_id(long(post_id))
-        if not post or (post.post_creator.key().id() == self.get_logged_in_user().key().id()):
+        if not post or post.post_creator.key().id() \
+                == self.get_logged_in_user().key().id():
             self.redirect("/")
         else:
             like_error = True
-            if self.get_logged_in_user().key().id() not in [x.user.key().id() for x in post.post_likes]:
+            if self.get_logged_in_user().key().id() not in [x.user.key().id()
+                                                            for x in
+                                                            post.post_likes]:
                 like = PostLike(user=self.get_logged_in_user(), post=post)
                 like.put()
                 like_error = False
-            self.render("blogpost.html", post=post, user=self.get_logged_in_user(), like_error=like_error)
+            self.render("blogpost.html", post=post,
+                        user=self.get_logged_in_user(), like_error=like_error)
 
 
 class ViewPostHandler(Handle):
@@ -343,7 +331,8 @@ class ViewPostHandler(Handle):
         if not post:
             self.redirect("/")
         else:
-            self.render("blogpost.html", post=post, user=self.get_logged_in_user())
+            self.render("blogpost.html", post=post,
+                        user=self.get_logged_in_user())
 
 
 # Handlers for Comments Section
@@ -371,11 +360,14 @@ class NewCommentHandler(Handle):
                 errors.append("Comment must not be empty.")
 
             if len(errors) == 0:
-                comment = PostComment(post=post, user=self.get_logged_in_user(), content=comment_desc)
+                comment = PostComment(post=post,
+                                      user=self.get_logged_in_user(),
+                                      content=comment_desc)
                 comment.put()
                 self.redirect("/%s" % post_id)
             else:
-                self.render("newcomment.html", content=comment_desc, user=self.get_logged_in_user(), errors=errors)
+                self.render("newcomment.html", content=comment_desc,
+                            user=self.get_logged_in_user(), errors=errors)
 
 
 class EditCommentHandler(Handle):
@@ -389,12 +381,14 @@ class EditCommentHandler(Handle):
 
         if not post or not comment:
             self.redirect("/")
-        elif comment.key().id() not in [x.key().id() for x in post.post_comments]:
+        elif comment.key().id() not in [x.key().id() for x in
+                                        post.post_comments]:
             self.redirect("/")
         elif self.get_logged_in_user().key().id() != comment.user.key().id():
             self.redirect("/")
         else:
-            self.render('newcomment.html', content=comment.content, user=self.get_logged_in_user())
+            self.render('newcomment.html', content=comment.content,
+                        user=self.get_logged_in_user())
 
     def post(self, post_id, comment_id):
         post = PostModel.get_by_id(long(post_id))
@@ -402,7 +396,8 @@ class EditCommentHandler(Handle):
 
         if not post or not comment:
             self.redirect("/")
-        elif comment.key().id() not in [x.key().id() for x in post.post_comments]:
+        elif comment.key().id() not in [x.key().id() for x in
+                                        post.post_comments]:
             self.redirect("/")
         elif self.get_logged_in_user().key().id() != comment.user.key().id():
             self.redirect("/")
@@ -430,7 +425,8 @@ class DeleteCommentHandler(Handle):
 
         if (not post) or (not comment):
             self.redirect("/")
-        elif comment.key().id() not in [x.key().id() for x in post.post_comments]:
+        elif comment.key().id() not in [x.key().id() for x in
+                                        post.post_comments]:
             self.redirect("/")
         elif self.get_logged_in_user().key().id() != comment.user.key().id():
             self.redirect("/")
