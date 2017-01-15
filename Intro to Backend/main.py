@@ -47,9 +47,9 @@ class Handle(webapp2.RequestHandler):
 
 # Main Handler
 class MainHandler(Handle):
-    '''
+    """
         Handler for the Index page.
-    '''
+    """
 
     def get(self):
         posts = db.GqlQuery("SELECT * FROM PostModel ORDER BY timestamp DESC")
