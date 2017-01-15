@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %} Welcome {% endblock %}
+{% block content %}
+    <div class="container">
+        <h2>Welcome, {{ user.username }}</h2>
+        <hr width="90%">
+        <h3>My Posts</h3>
+        <ul>
+            {% for post in user.posts %}
+                <li><a href="/{{ post.key().id() }}">{{ post.subject }}</a></li>
+            {% endfor %}
+
+        </ul>
+    </div>
+{% endblock %}

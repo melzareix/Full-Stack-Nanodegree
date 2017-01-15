@@ -1,23 +1,24 @@
 {% extends "base.html" %}
-{% block title %} New Post{% endblock %}
+{% block title %} {{ post.subject }}{% endblock %}
 {% block content %}
     <div class="container-fluid">
-        <h2>New Blogpost</h2>
+        <h2>Edit Post</h2>
         <hr/>
         <form method="POST">
             <label>
                 <div>Title</div>
-                <input type="text" name="subject" value="{{ subject }}">
+                <input type="text" name="subject" value="{{ post.subject }}">
             </label>
             <br/>
             <br/>
             <label for="desc">
                 <div>Description</div>
-                <textarea name="content" cols="100" rows="10">{{ content }}</textarea>
+                <textarea name="content" cols="100" rows="10">{{ post.content }}</textarea>
             </label>
 
             <div>
-                <input class="btn btn-primary" type="submit">
+                <a href="/{{ post.key().id() }}" class="btn btn-primary">Cancel</a>
+                <input class="btn btn-success" type="submit">
             </div>
         </form>
         <br>

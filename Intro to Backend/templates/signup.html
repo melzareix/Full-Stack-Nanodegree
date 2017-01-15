@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %} Signup {% endblock %}
+{% block content %}
+    <div class="container">
+        {% if errors | length > 0 %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+        {% endif %}
+        <form method="post">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input class="form-control" type="text" name="username" title="username">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input class="form-control" type="password" name="password" title="password">
+            </div>
+
+            <div class="form-group">
+                <label for="verify">Verify Password</label>
+                <input class="form-control" type="password" name="verify" title="verify">
+            </div>
+
+            <div class="form-group">
+                <label for="vemail">Email (Optional)</label>
+                <input class="form-control" type="text" name="email" title="email">
+            </div>
+
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" title="submit">
+            </div>
+        </form>
+
+    </div>
+{% endblock %}

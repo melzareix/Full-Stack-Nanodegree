@@ -1,17 +1,22 @@
 {% extends "base.html" %}
 {% block title %} Home {% endblock %}
+{% block header %}
+{% endblock %}
 {% block content %}
-    <div class="container-fluid">
+    <div class="container">
+    {% if posts.count() == 0 %}
+        <h2 class="text-center">No Posts Found. Interested to add a new one?</h2>
+    {% endif %}
         {% for post in posts %}
             <div class="blog-post">
                 <h3 class="title">
                     <a href="/{{ post.key().id() }}">{{ post.subject }}</a>
                 </h3>
                 <h6 class="text-right">
-                    {{ post.timestamp.strftime('%a, %m %b %Y') }}
+                    {{ post.timestamp.strftime('%a, %m %b %Y') }} By {{ post.post_creator.username }}
                 </h6>
                 <p>
-                    {{ post._render_text | safe }}
+                    {{ post.render() | safe }}
                 </p>
                 <hr width="50%">
             </div>

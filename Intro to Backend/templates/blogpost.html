@@ -1,18 +1,69 @@
 {% extends "base.html" %}
 {% block title %} Home {% endblock %}
 {% block content %}
-    <div class="container-fluid">
-            <div class="blog-post">
-                <h1 class="title text-center">
-                   {{ post.subject }}
-                </h1>
-                <h6 class="text-center">
-                    {{ post.timestamp }}
-                </h6>
-                <br>
-                <p>
-                    {{ post._render_text | safe}}
-                </p>
-            </div>
+    <div class="container">
+        <div class="blog-post">
+            <h1 class="title text-center">
+                {{ post.subject }}
+            </h1>
+            <h6 class="text-center">
+                {{ post.timestamp }} <br/><br/>
+                Posted by : {{ post.post_creator.username }} <br/>
+            </h6>
+            <br>
+            <p>
+                {{ post.render() | safe }}
+            </p>
+        </div>
+
+        <hr>
+        <span style="padding-right:5px;font-weight: bold;font-size: 20px;">{{ post.post_likes.count() }} like(s)</span>
+        <br/><br/>
+        <div class="post-options">
+            {% if user %}
+                {% if user.key().id() == post.post_creator.key().id() %}
+                    <a href="{{ post.key().id() }}/edit" class="btn btn-warning">Edit post</a>
+                    <a href="{{ post.key().id() }}/del" class="btn btn-danger">Delete post</a>
+                {% else %}
+                    <a href="/{{ post.key().id() }}/like" class="btn btn-success">Like</a>
+                {% endif %}
+            {% endif %}
+        </div>
+        <hr>
+        <h1>Comments</h1>
+        <hr align="left" width="30%">
+        <div class="comments">
+            {% for post_comment in post.post_comments %}
+                <div class="comment">
+                    <h4> {{ post_comment.user.username }}</h4>
+                    <p style="font-size: 16px;">{{ post_comment.content }}</p>
+                    <p style="font-size:14px;font-weight: bold">Posted on
+                        : {{ post_comment.timestamp.strftime('%a, %m %b %Y') }}</p>
+                    {% if post_comment.user.username == user.username %}
+                        <a href="/{{ post.key().id() }}/comment/edit/{{ post_comment.key().id() }}"
+                           class="btn btn-primary">Edit</a>
+                        <a href="/{{ post.key().id() }}/comment/del/{{ post_comment.key().id() }}"
+                           class="btn btn-danger">Delete</a>
+                    {% endif %}
+                    <hr align="left" width="10%">
+                </div>
+            {% endfor %}
+
+
+            <hr>
+        {% if user %}
+            <a href="/{{ post.key().id() }}/comment" class="btn btn-primary"> New Comment</a>
+            <br /><br />
+        {% endif %}
+            {% if like_error %}
+                <script>
+                    swal({
+                        title: 'Oops!',
+                        text: 'You liked this post before.',
+                        type: "error"
+                    })
+                </script>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
