@@ -217,7 +217,7 @@ class ProfileHandler(Handle):
         username = self.request.cookies.get('username')
         if Validate.is_user_logged_in(username):
             user = UserModel.get_by_id(long(username.split("|")[0]))
-            self.render("welcome.html", user=user)
+            self.render("myprofile.html", user=user)
         else:
             self.redirect("/login")
 
