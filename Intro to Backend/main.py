@@ -16,6 +16,10 @@ jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir),
 
 
 class Handle(webapp2.RequestHandler):
+    """
+        Base class for handlers, includes several helpful methods.
+    """
+
     def write(self, *a, **kw):
         self.response.out.write(*a, **kw)
 
@@ -36,12 +40,18 @@ class Handle(webapp2.RequestHandler):
 
 # Database Models
 class UserModel(db.Model):
+    """
+        Model for User.
+    """
     username = db.StringProperty(required=True)
     password = db.StringProperty(required=True)
     email = db.StringProperty(required=False)
 
 
 class PostModel(db.Model):
+    """
+        Model for Post.
+    """
     subject = db.StringProperty(required=True)
     content = db.TextProperty(required=True)
     timestamp = db.DateTimeProperty(auto_now_add=True)
@@ -53,59 +63,40 @@ class PostModel(db.Model):
 
 
 class PostLike(db.Model):
+    """
+        Model for a Like on a post.
+    """
     post = db.ReferenceProperty(PostModel, collection_name='post_likes')
     user = db.ReferenceProperty(UserModel, collection_name='posts_I_liked')
 
 
 class PostComment(db.Model):
+    """
+        Model for a Comment on a Post.
+    """
     post = db.ReferenceProperty(PostModel, collection_name='post_comments')
     user = db.ReferenceProperty(UserModel, collection_name='comments_I_made')
     content = db.TextProperty(required=True)
     timestamp = db.DateTimeProperty(auto_now_add=True)
 
 
+# Main Handler
 class MainHandler(Handle):
+    '''
+        Handler for the Index page.
+    '''
+
     def get(self):
         posts = db.GqlQuery("SELECT * FROM PostModel ORDER BY timestamp DESC")
         self.render('index.html', posts=posts, user=self.get_logged_in_user())
 
 
-# POST Handlers
-class NewPost(Handle):
-    def get(self):
-        if Validate.is_user_logged_in(self.request.cookies.get('username')):
-            self.render('newpost.html', user=self.get_logged_in_user())
-        else:
-            self.redirect("/login")
-
-    def post(self):
-        subject = self.request.get('subject')
-        content = self.request.get('content')
-
-        errors = []
-        if not subject:
-            errors.append("Post must have a title.")
-        if not content:
-            errors.append("Post must have a desc.")
-        if subject and content:
-            post = PostModel(subject=subject, content=content, post_creator=self.get_logged_in_user())
-            post.put()
-            self.redirect("/" + str(post.key().id()))
-        self.render("newpost.html", subject=subject, content=content, errors=errors, user=self.get_logged_in_user())
-
-
-class ViewPost(Handle):
-    def get(self, post_id):
-        post = PostModel.get_by_id(long(post_id))
-        if not post:
-            self.redirect("/")
-        else:
-            self.render("blogpost.html", post=post, user=self.get_logged_in_user())
-
-
 # User Reg/Login Handlers
 
 class Validate(object):
+    """
+        Helper class for Validation.
+    """
     USER_RE = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
     PASS_RE = re.compile(r"^.{3,20}$")
     EMAIL_RE = re.compile(r"^[\S]+@[\S]+.[\S]+$")
@@ -128,6 +119,10 @@ class Validate(object):
 
 
 class SignUp(Handle):
+    """
+        Handler for User Signup.
+    """
+
     def get(self):
         username_cookie = self.request.cookies.get('username')
         if Validate.is_user_logged_in(username_cookie):
@@ -174,6 +169,10 @@ class SignUp(Handle):
 
 
 class Login(Handle):
+    """
+        Handler for User login.
+    """
+
     def get(self):
         username_cookie = self.request.cookies.get('username')
         if Validate.is_user_logged_in(username_cookie):
@@ -198,12 +197,22 @@ class Login(Handle):
 
 
 class LogoutHandler(Handle):
+    """
+        Handler for User logout.
+    """
+
     def get(self):
         self.response.delete_cookie('username')
         self.redirect("/signup")
 
 
+# User Profile Handler
+
 class ProfileHandler(Handle):
+    """
+        Handler for /myprofile Page.
+    """
+
     def get(self):
         username = self.request.cookies.get('username')
         if Validate.is_user_logged_in(username):
@@ -213,7 +222,44 @@ class ProfileHandler(Handle):
             self.redirect("/login")
 
 
+# Post(s) Handlers
+class NewPostHandler(Handle):
+    """
+        Handler for creating a new Post.
+    """
+
+    def get(self):
+        if Validate.is_user_logged_in(self.request.cookies.get('username')):
+            self.render('newpost.html', user=self.get_logged_in_user())
+        else:
+            self.redirect("/login")
+
+    def post(self):
+        subject = self.request.get('subject')
+        content = self.request.get('content')
+
+        if not Validate.is_user_logged_in(self.request.cookies.get('username')):
+            self.redirect("/login")
+        else:
+            errors = []
+            if not subject:
+                errors.append("Post must have a title.")
+            if not content:
+                errors.append("Post must have a desc.")
+            if subject and content:
+                post = PostModel(subject=subject, content=content, post_creator=self.get_logged_in_user())
+                post.put()
+                self.redirect("/" + str(post.key().id()))
+            else:
+                self.render("newpost.html", subject=subject, content=content, errors=errors,
+                            user=self.get_logged_in_user())
+
+
 class EditPostHandler(Handle):
+    """
+        Handler for editing posts.
+    """
+
     def get(self, post_id):
         post = PostModel.get_by_id(long(post_id))
         if post:
@@ -232,33 +278,37 @@ class EditPostHandler(Handle):
 
         if not post:
             self.redirect("/")
-
-        errors = []
-        if not subject:
-            errors.append("Post must have a title.")
         else:
-            post.subject = subject
+            errors = []
+            if not subject:
+                errors.append("Post must have a title.")
+            else:
+                post.subject = subject
 
-        if not content:
-            errors.append("Post must have a desc.")
-        else:
-            post.content = content
+            if not content:
+                errors.append("Post must have a desc.")
+            else:
+                post.content = content
 
-        if subject and content:
-            post.put()
-            self.redirect("/" + str(post.key().id()))
-
-        self.render("editpost.html", post=post, errors=errors, user=self.get_logged_in_user())
+            if subject and content:
+                post.put()
+                self.redirect("/" + str(post.key().id()))
+            else:
+                self.render("editpost.html", post=post, errors=errors, user=self.get_logged_in_user())
 
 
 class DeletePostHandler(Handle):
+    """
+        Handler for deleting posts.
+    """
+
     def get(self, post_id):
         post = PostModel.get_by_id(long(post_id))
         if post:
             post_creator_id = post.post_creator.key().id()
             if self.get_logged_in_user().key().id() == post_creator_id:
-                for x in post.post_comments:
-                    x.delete()
+                for post_comment in post.post_comments:
+                    post_comment.delete()
                 post.delete()
             self.redirect("/")
         else:
@@ -266,6 +316,10 @@ class DeletePostHandler(Handle):
 
 
 class LikePostHandler(Handle):
+    """
+        Handler for post like.
+    """
+
     def get(self, post_id):
         post = PostModel.get_by_id(long(post_id))
         if not post or (post.post_creator.key().id() == self.get_logged_in_user().key().id()):
@@ -279,7 +333,56 @@ class LikePostHandler(Handle):
             self.render("blogpost.html", post=post, user=self.get_logged_in_user(), like_error=like_error)
 
 
+class ViewPostHandler(Handle):
+    """
+        Handler for viewing a specific post.
+    """
+
+    def get(self, post_id):
+        post = PostModel.get_by_id(long(post_id))
+        if not post:
+            self.redirect("/")
+        else:
+            self.render("blogpost.html", post=post, user=self.get_logged_in_user())
+
+
+# Handlers for Comments Section
+
+class NewCommentHandler(Handle):
+    """
+        Handler for adding a new comment.
+    """
+
+    def get(self, post_id):
+        post = PostModel.get_by_id(long(post_id))
+        if not post or not self.get_logged_in_user():
+            self.redirect("/")
+        else:
+            self.render("newcomment.html", user=self.get_logged_in_user())
+
+    def post(self, post_id):
+        post = PostModel.get_by_id(long(post_id))
+        if not post:
+            self.redirect("/")
+        else:
+            comment_desc = self.request.get("comment")
+            errors = []
+            if not comment_desc:
+                errors.append("Comment must not be empty.")
+
+            if len(errors) == 0:
+                comment = PostComment(post=post, user=self.get_logged_in_user(), content=comment_desc)
+                comment.put()
+                self.redirect("/%s" % post_id)
+            else:
+                self.render("newcomment.html", content=comment_desc, user=self.get_logged_in_user(), errors=errors)
+
+
 class EditCommentHandler(Handle):
+    """
+        Handler for comment editing.
+    """
+
     def get(self, post_id, comment_id):
         post = PostModel.get_by_id(long(post_id))
         comment = PostComment.get_by_id(long(comment_id))
@@ -317,6 +420,10 @@ class EditCommentHandler(Handle):
 
 
 class DeleteCommentHandler(Handle):
+    """
+        Handler for Comment deletion.
+    """
+
     def get(self, post_id, comment_id):
         post = PostModel.get_by_id(long(post_id))
         comment = PostComment.get_by_id(long(comment_id))
@@ -332,34 +439,9 @@ class DeleteCommentHandler(Handle):
         self.redirect("/%s" % post_id)
 
 
-class NewCommentHandler(Handle):
-    def get(self, post_id):
-        post = PostModel.get_by_id(long(post_id))
-        if not post or not self.get_logged_in_user():
-            self.redirect("/")
-        self.render("newcomment.html", user=self.get_logged_in_user())
-
-    def post(self, post_id):
-        post = PostModel.get_by_id(long(post_id))
-        if not post:
-            self.redirect("/")
-        comment_desc = self.request.get("comment")
-
-        errors = []
-        if not comment_desc:
-            errors.append("Comment must not be empty.")
-
-        if len(errors) == 0:
-            comment = PostComment(post=post, user=self.get_logged_in_user(), content=comment_desc)
-            comment.put()
-            self.redirect("/%s" % post_id)
-
-        self.render("newcomment.html", content=comment_desc, user=self.get_logged_in_user(), errors=errors)
-
-
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/newpost', NewPost),
+    ('/newpost', NewPostHandler),
     ('/signup', SignUp),
     ('/login', Login),
     ('/logout', LogoutHandler),
@@ -370,4 +452,4 @@ app = webapp2.WSGIApplication([
     ('/(\d+)/comment/edit/(\d+)', EditCommentHandler),
     ('/(\d+)/comment/del/(\d+)', DeleteCommentHandler),
     ('/(\d+)/comment', NewCommentHandler),
-    ('/(\d+)', ViewPost)], debug=True)
+    ('/(\d+)', ViewPostHandler)], debug=True)
