@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %} New Post{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <h2>New Blogpost</h2>
+        <hr/>
+        <form method="POST">
+            <label>
+                <div>Title</div>
+                <input type="text" name="subject" value="{{ subject }}">
+            </label>
+            <br/>
+            <br/>
+            <label for="desc">
+                <div>Description</div>
+                <textarea name="content" cols="100" rows="10">{{ content }}</textarea>
+            </label>
+
+            <div>
+                <input type="submit">
+            </div>
+        </form>
+        <br>
+
+        {% if errors|length > 0 %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+    </div>
+{% endblock %}

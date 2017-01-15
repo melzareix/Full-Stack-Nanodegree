@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+{% block header %}
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %} - Blog</title>
+        <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
+        <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+    </head>
+{% endblock %}
+<body>
+    <div id="blog_title">
+        <br>
+        <h2 class="text-center">The Ultimate Blog</h2>
+    </div>
+
+    <ul class="list-inline text-center">
+        <li><a href="/"> Home </a></li> |
+        <li><a href="/newpost"> New Post</a></li> |
+        <li><a href="/signup"> Sign Up</a></li> |
+        <li><a href="/login"> Login </a></li>
+    </ul>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>
