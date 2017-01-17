@@ -8,22 +8,14 @@
 
 
 -- TABLES CREATION
-DROP TABLE IF EXISTS Players CASCADE;
+DROP DATABASE IF EXISTS tournament;
+CREATE DATABASE tournament;
+
 CREATE TABLE Players (
   id   SERIAL PRIMARY KEY,
   name VARCHAR(100)
 );
 
-DROP TABLE IF EXISTS Standings;
-CREATE TABLE Standings (
-  id      INT,
-  wins    INT DEFAULT 0,
-  loses   INT DEFAULT 0,
-  matches INT DEFAULT 0,
-  FOREIGN KEY (id) REFERENCES Players (id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-DROP TABLE IF EXISTS Matches;
 CREATE TABLE Matches (
   id     SERIAL PRIMARY KEY,
   winner INT,
@@ -32,28 +24,30 @@ CREATE TABLE Matches (
   FOREIGN KEY (loser) REFERENCES Players (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
--- CREATING TRIGGERS
+-- VIEW TO GET THE STANDINGS
+DROP VIEW IF EXISTS get_standings;
+CREATE VIEW get_standings
+AS
+  SELECT
+    player_total.sid    AS id,
+    player_total.name   AS name,
+    coalesce(wins, 0)  AS wins,
+    coalesce(loses, 0) AS matches
+  FROM
+    (SELECT
+       p.id         AS sid,
+       p.name       AS name,
+       count(loser) AS loses
+     FROM Players p LEFT JOIN matches m ON p.id = m.loser or p.id = m.winner
+     GROUP BY p.id, name
+     ORDER BY p.id) AS player_total
+    JOIN
+    (SELECT
+       p.id          AS sid,
+       count(winner) AS wins
+     FROM Players p LEFT JOIN matches m ON p.id = m.winner
+     GROUP BY p.id
+     ORDER BY p.id) AS player_wins ON player_total.sid = player_wins.sid
+  ORDER BY wins;
 
--- TRIGGER TO INSERT THE NEWLY CREATED PLAYER TO
--- THE STANDINGS TABLE.
-
-DROP FUNCTION IF EXISTS insert_player_to_standings();
-CREATE OR REPLACE FUNCTION insert_player_to_standings()
-  RETURNS TRIGGER AS
-$$
-BEGIN
-  INSERT INTO Standings (id) VALUES (NEW.id);
-  RETURN NEW;
-END;
-$$
-LANGUAGE 'plpgsql';
-
-CREATE TRIGGER player_inserted AFTER INSERT
-  ON Players
-FOR EACH ROW
-EXECUTE PROCEDURE insert_player_to_standings();
-
-INSERT INTO Players (name) VALUES ('ali');
-INSERT INTO Players (name) VALUES ('mohamed');
-
-TRUNCATE Matches;
+SELECT * FROM get_standings;
