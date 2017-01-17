@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="PostgreSQL - tournament@localhost">
+  <database-model serializer="dbm" rdbms="POSTGRES" format-version="2.6">
+    <database id="1" name="postgres">
+      <object-id>12669</object-id>
+    </database>
+    <database id="2" name="python-db">
+      <object-id>16384</object-id>
+    </database>
+    <database id="3" name="forum">
+      <object-id>16396</object-id>
+    </database>
+    <database id="4" name="fishes">
+      <object-id>16417</object-id>
+    </database>
+    <database id="5" name="tournament">
+      <object-id>16489</object-id>
+      <visible>1</visible>
+    </database>
+    <schema id="6" parent="5" name="public">
+      <object-id>2200</object-id>
+      <visible>1</visible>
+      <introspection-state-number>1551</introspection-state-number>
+      <introspection-timestamp>2017-01-17.21:02:28.683</introspection-timestamp>
+    </schema>
+    <schema id="7" parent="5" name="pg_catalog">
+      <object-id>11</object-id>
+    </schema>
+    <schema id="8" parent="5" name="pg_toast">
+      <object-id>99</object-id>
+    </schema>
+    <schema id="9" parent="5" name="pg_temp_1">
+      <object-id>11848</object-id>
+    </schema>
+    <schema id="10" parent="5" name="pg_toast_temp_1">
+      <object-id>11849</object-id>
+    </schema>
+    <schema id="11" parent="5" name="information_schema">
+      <object-id>12381</object-id>
+    </schema>
+    <sequence id="12" parent="6" name="matches_id_seq">
+      <object-id>17503</object-id>
+      <state-number>1545</state-number>
+    </sequence>
+    <sequence id="13" parent="6" name="players_id_seq">
+      <object-id>17484</object-id>
+      <state-number>1541</state-number>
+    </sequence>
+    <table id="14" parent="6" name="matches">
+      <object-id>17505</object-id>
+      <state-number>1551</state-number>
+    </table>
+    <table id="15" parent="6" name="players">
+      <object-id>17486</object-id>
+      <state-number>1548</state-number>
+    </table>
+    <table id="16" parent="6" name="standings">
+      <object-id>17492</object-id>
+      <state-number>1543</state-number>
+    </table>
+    <routine id="17" parent="6" name="insert_player_to_standings">
+      <object-id>17521</object-id>
+      <state-number>1547</state-number>
+      <routine-kind>FUNCTION</routine-kind>
+    </routine>
+    <column id="18" parent="14" name="id">
+      <state-number>1545</state-number>
+      <mandatory>1</mandatory>
+      <data-type>integer|0</data-type>
+      <default-expression>nextval(&apos;matches_id_seq&apos;::regclass)</default-expression>
+    </column>
+    <column id="19" parent="14" name="winner">
+      <state-number>1545</state-number>
+      <data-type>integer|0</data-type>
+    </column>
+    <column id="20" parent="14" name="loser">
+      <state-number>1545</state-number>
+      <data-type>integer|0</data-type>
+    </column>
+    <index id="21" parent="14" name="matches_pkey">
+      <object-id>17509</object-id>
+      <columns>id</columns>
+      <desc-columns></desc-columns>
+      <unique>1</unique>
+    </index>
+    <key id="22" parent="14" name="matches_pkey">
+      <object-id>17510</object-id>
+      <columns>id</columns>
+      <underlying-index>matches_pkey</underlying-index>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="23" parent="14" name="matches_winner_fkey">
+      <object-id>17511</object-id>
+      <columns>winner</columns>
+      <ref-key>~.players.players_pkey</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="24" parent="14" name="matches_loser_fkey">
+      <object-id>17516</object-id>
+      <columns>loser</columns>
+      <ref-key>~.players.players_pkey</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="25" parent="15" name="id">
+      <state-number>1541</state-number>
+      <mandatory>1</mandatory>
+      <data-type>integer|0</data-type>
+      <default-expression>nextval(&apos;players_id_seq&apos;::regclass)</default-expression>
+    </column>
+    <column id="26" parent="15" name="name">
+      <state-number>1541</state-number>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <index id="27" parent="15" name="players_pkey">
+      <object-id>17490</object-id>
+      <columns>id</columns>
+      <desc-columns></desc-columns>
+      <unique>1</unique>
+    </index>
+    <key id="28" parent="15" name="players_pkey">
+      <object-id>17491</object-id>
+      <columns>id</columns>
+      <underlying-index>players_pkey</underlying-index>
+      <primary>1</primary>
+    </key>
+    <column id="29" parent="16" name="id">
+      <state-number>1543</state-number>
+      <data-type>integer|0</data-type>
+    </column>
+    <column id="30" parent="16" name="wins">
+      <state-number>1543</state-number>
+      <data-type>integer|0</data-type>
+      <default-expression>0</default-expression>
+    </column>
+    <column id="31" parent="16" name="loses">
+      <state-number>1543</state-number>
+      <data-type>integer|0</data-type>
+      <default-expression>0</default-expression>
+    </column>
+    <column id="32" parent="16" name="matches">
+      <state-number>1543</state-number>
+      <data-type>integer|0</data-type>
+      <default-expression>0</default-expression>
+    </column>
+    <foreign-key id="33" parent="16" name="standings_id_fkey">
+      <object-id>17498</object-id>
+      <columns>id</columns>
+      <ref-key>~.players.players_pkey</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <argument id="34" parent="17">
+      <direction>RETURN</direction>
+      <data-type>trigger|0</data-type>
+    </argument>
+  </database-model>
+</dataSource>

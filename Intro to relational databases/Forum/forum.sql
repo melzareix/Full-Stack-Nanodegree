@@ -1,0 +1,11 @@
+DROP TABLE posts;
+CREATE TABLE posts (
+  content TEXT,
+  time    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  id      SERIAL PRIMARY KEY
+);
+
+CREATE TABLE helloworld (
+  id SERIAL PRIMARY KEY,
+  FOREIGN KEY (id) REFERENCES posts (id)
+);
