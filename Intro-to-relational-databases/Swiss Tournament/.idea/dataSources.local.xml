@@ -8,8 +8,8 @@
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
       <user-name>mohamedelzarei</user-name>
-      <introspection-scope>tournament:public,pg_catalog,mohamedelzarei</introspection-scope>
-      <resolve-scope>tournament:public,mohamedelzarei</resolve-scope>
+      <introspection-scope>tournament:mohamedelzarei,pg_catalog,public</introspection-scope>
+      <resolve-scope>tournament:mohamedelzarei,public</resolve-scope>
     </data-source>
   </component>
 </project>

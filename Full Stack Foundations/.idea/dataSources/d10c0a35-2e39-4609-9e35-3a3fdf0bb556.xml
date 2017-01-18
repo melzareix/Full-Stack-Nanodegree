@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="restaurantmenu">
+  <database-model serializer="dbm" rdbms="SQLITE" format-version="2.6">
+    <schema id="1">
+      <visible>1</visible>
+    </schema>
+    <table id="2" parent="1" name="menu_item"/>
+    <table id="3" parent="1" name="restaurant"/>
+    <column id="4" parent="2" name="name">
+      <mandatory>1</mandatory>
+      <data-type>VARCHAR(80)(0,-1)|12</data-type>
+    </column>
+    <column id="5" parent="2" name="id">
+      <mandatory>1</mandatory>
+      <data-type>INTEGER(0,-1)|4</data-type>
+    </column>
+    <column id="6" parent="2" name="description">
+      <data-type>VARCHAR(250)(0,-1)|12</data-type>
+    </column>
+    <column id="7" parent="2" name="price">
+      <data-type>VARCHAR(8)(0,-1)|12</data-type>
+    </column>
+    <column id="8" parent="2" name="course">
+      <data-type>VARCHAR(250)(0,-1)|12</data-type>
+    </column>
+    <column id="9" parent="2" name="restaurant_id">
+      <data-type>INTEGER(0,-1)|4</data-type>
+    </column>
+    <key id="10" parent="2">
+      <columns>id)
+foreign key(restaurant_id</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="11" parent="2" name="#FAKE_menu_item_1">
+      <name-surrogate>1</name-surrogate>
+      <columns>restaurant_id</columns>
+      <deferrable>1</deferrable>
+      <initially-deferred>1</initially-deferred>
+      <ref-key>~.restaurant.#1</ref-key>
+      <cascade-update-rule>no_action</cascade-update-rule>
+      <cascade-delete-rule>no_action</cascade-delete-rule>
+    </foreign-key>
+    <column id="12" parent="3" name="id">
+      <mandatory>1</mandatory>
+      <data-type>INTEGER(0,-1)|4</data-type>
+    </column>
+    <column id="13" parent="3" name="name">
+      <mandatory>1</mandatory>
+      <data-type>VARCHAR(250)(0,-1)|12</data-type>
+    </column>
+    <key id="14" parent="3">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+  </database-model>
+</dataSource>
