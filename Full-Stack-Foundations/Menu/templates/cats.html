@@ -1,12 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="page-title-wrap padding-top-30 padding-bottom-30 margin-bottom-100"><!-- section title -->
+    <div class="page-title-wrap padding-top-30 margin-bottom-10"><!-- section title -->
         <div class="container">
             <div class="pagetitle-text">
                 <h4 class="white">Categories</h4>
             </div>
+            <div class="pagetitle-text pull-right">
+                <h1><a style="color: #eee;font-size: 18px" href="#">New Category</a></h1>
+            </div>
         </div>
     </div>
+
+    {{ super() }}
     <!--================================CATEGOTY SECTION==========================================-->
 
     <section class="categories-section padding-bottom-40">

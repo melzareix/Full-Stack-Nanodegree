@@ -67,6 +67,8 @@
                 width="120"
                 alt=""/></a>
     </div>
+
+
     <!--================================HEADER==========================================-->
     <div class="header {{ solid }}">
         <div class="header-inner">
@@ -97,8 +99,22 @@
         </div>
     </div><!-- header end -->
 
+
     {% block content %}
-    
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="container">
+                    <div class="alert-warning alert">
+                        <ul>
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+        {% endwith %}
     {% endblock %}
 
     <!--================================ FOOTER AREA ==========================================-->
@@ -302,6 +318,12 @@
 
 
 
+
+
+
+
+
+
 </script>
 <script type="text/javascript"
         src="{{ url_for('static',filename='assets/testimonial/js/jquery.tmpl.min.js') }}"></script>
@@ -317,7 +339,7 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.0/jquery.matchHeight-min.js"></script>
 <script>
-    $(function() {
+    $(function () {
         $('.col-md-3.col-sm-6.col-xs-12').matchHeight();
     });
 </script>
