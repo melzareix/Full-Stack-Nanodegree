@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!--================================PAGE TITLE==========================================-->
+    <div class="page-title-wrap padding-top-30 "><!-- section title -->
+        <div class="container">
+            <div class="pagetitle-text">
+                <h4 class="white">{{ item.name }}</h4>
+            </div>
+        </div>
+    </div><!-- section title end -->
+
+    <!--================================listing SECTION==========================================-->
+
+    <section class="aside-layout-section padding-bottom-40">
+        <div class="container"><!-- section container -->
+            <div class="row"><!-- row -->
+                <div class="col-md-12 col-sm-12 col-xs-12 main-wrap"><!-- content area column -->
+                    <div class="listing-single padding-bottom-40">
+                        <div class="single-listing-wrap">
+                            <div class="listing-details padding-top-50">
+                                <div class="tab-content current">
+                                    <p>
+                                        {{ item.description }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- content area end -->
+            </div>
+        </div><!-- section container end -->
+    </section>
+
+
+{% endblock %}

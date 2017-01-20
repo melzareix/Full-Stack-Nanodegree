@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!--================================PAGE TITLE==========================================-->
+    <div class="page-title-wrap padding-top-30 "><!-- section title -->
+        <div class="container">
+            <div class="pagetitle-text">
+                <h4 class="white">Edit Item</h4>
+            </div>
+        </div>
+    </div><!-- section title end -->
+    <section class="categories-section padding-bottom-40">
+        <div class="container"><!-- section container -->
+            <div class="modal-body">
+                <div class=" listing-login-form">
+                    <form method="post">
+                        <div class="listing-form-field">
+                            <input class="form-field bgwhite" type="text"
+                                   name="item_name" value="{{ item.name }}"/>
+                        </div>
+                        <div class="listing-form-field">
+                            <textarea class="form-field bgwhite"
+                                      name="item_desc" cols="30"
+                                      rows="10">{{ item.description }}</textarea>
+                        </div>
+                        <div class="listing-form-field">
+                            <select name="cat_id" class="form-field"
+                                    style="height: 30pt;">
+                                {% for category in categories %}
+                                    {% if category.id == item.cat_id %}
+                                        <option value="{{ category.id }}"
+                                                selected>{{ category.name }}</option>
+                                    {% else %}
+                                        <option value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                        <div class="listing-form-field">
+                            <input class="form-field submit bgblue-1"
+                                   type="submit" value="Save"/>
+                        </div>
+                        <div class="btn-2">
+                            <a href="{{ url_for('view_item',item_id = item.id,cat_id = item.cat_id) }}">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </section>
+{% endblock %}

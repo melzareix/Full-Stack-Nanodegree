@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!--================================PAGE TITLE==========================================-->
+    <div class="page-title-wrap padding-top-30 padding-bottom-30 margin-bottom-100"><!-- section title -->
+        <div class="container">
+            <div class="pagetitle-text">
+                <h4 class="white">{{ category.name }}</h4>
+            </div>
+        </div>
+    </div><!-- section title end -->
+
+    <!--================================LISTING SECTION ==========================================-->
+    <section class="sidebar-layout padding-bottom-70">
+        <div class="container">
+            <div class="row"><!-- row -->
+                <!--================================CATEGORY SECTION ==========================================-->
+                <div class="col-md-12 col-sm-12 col-xs-12 pull-right"><!-- row -->
+                    <div class="listing-section">
+                        <div class="add-listing-wrapper">
+                            <div class="listing-main listview tab-content">
+                                <div id="latest-listing" class="tab-pane active">
+                                    <div class="listing-wrapper style-2 row">
+                                        {% for item in category.items %}
+                                            <div class="item col-md-4 col-sm-6 col-xs-12"><!-- .ITEM -->
+                                                <div class="listing-item shadow-1 clearfix">
+                                                    <div class="figure">
+                                                        <img src="/static/images/listings/270x200/01.jpg" alt="feature item"/>
+                                                        <div class="hover-overlay"></div>
+                                                    </div>
+                                                    <div class="listing-content list-style-content clearfix">
+                                                        <div class="listing-meta-cat">
+                                                            <a class="bgyallow-1" href="#"><i class="fa fa-heart"></i></a>
+                                                        </div>
+                                                        <div class="listing-title">
+                                                            <h6>{{ item.name }}</h6>
+                                                        </div>
+                                                        <div class="listing-disc">
+                                                            <p>{{ item.description }}</p>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="star-rating pull-right"><!-- rating-->
+                                                    <div class="search-form-wrap2" style="padding: 5px 20px 5px 20px;background-color: #ebc131;">
+                                                        <a href="{{ url_for('view_item',cat_id=category.id,item_id=item.id) }}" style="color:#f5f5f5" class="button search-form-submit">Read More</a>
+                                                    </div>
+                                                </div><!-- rating end-->
+
+                                            </div><!-- /.ITEM -->
+
+                                        {% endfor %}
+
+                                    </div>
+                                    <div class="listing-wrapper style-1 row">
+                                        <div class="item col-md-4 col-sm-6 col-xs-12"><!-- .ITEM -->
+                                            <div class="listing-item clearfix">
+                                                <div class="figure">
+                                                    <img src="images/listings/270x250/01.jpg" alt="feature item"/>
+                                                    <div class="item-love"><a href="#"><i class="fa fa-heart-o"></i><i class="fa fa-heart "></i></a></div>
+                                                    <div class="hover-overlay"></div>
+                                                    <div class="listing-content clearfix">
+                                                        <div class="listing-meta-cat">
+                                                            <a class="bgyallow-1 c333" href="#">Fitness</a>
+                                                        </div>
+                                                        <div class="listing-title">
+                                                            <h6><a href="single-listing.html">Best Car For Sale</a></h6>
+                                                        </div>
+                                                        <div class="listing-location pull-left"><!-- location-->
+                                                            <a href="#"><i class="fa fa-map-marker"></i>new york city</a>
+                                                        </div><!-- location end-->
+                                                        <div class="star-rating pull-right"><!-- rating-->
+                                                            <div class="score-callback" data-score="5"></div>
+                                                        </div><!-- rating end-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.ITEM -->
+                                        <div class="item col-md-4 col-sm-6 col-xs-12"><!-- .ITEM -->
+                                            <div class="listing-item clearfix">
+                                                <div class="figure">
+                                                    <img src="images/listings/270x250/02.jpg" alt="feature item"/>
+                                                    <div class="item-love"><a href="#"><i class="fa fa-heart-o"></i><i class="fa fa-heart "></i></a></div>
+                                                    <div class="hover-overlay"></div>
+                                                    <div class="listing-content clearfix">
+                                                        <div class="listing-meta-cat">
+                                                            <a class="bgyallow-1 c333" href="#">Fitness</a>
+                                                        </div>
+                                                        <div class="listing-title">
+                                                            <h6><a href="single-listing.html">Best Car For Sale</a></h6>
+                                                        </div>
+                                                        <div class="listing-location pull-left"><!-- location-->
+                                                            <a href="#"><i class="fa fa-map-marker"></i>new york city</a>
+                                                        </div><!-- location end-->
+                                                        <div class="star-rating pull-right"><!-- rating-->
+                                                            <div class="score-callback" data-score="5"></div>
+                                                        </div><!-- rating end-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.ITEM -->
+                                        <div class="item col-md-4 col-sm-6 col-xs-12"><!-- .ITEM -->
+                                            <div class="listing-item clearfix">
+                                                <div class="figure">
+                                                    <img src="images/listings/270x250/03.jpg" alt="feature item"/>
+                                                    <div class="item-love"><a href="#"><i class="fa fa-heart-o"></i><i class="fa fa-heart "></i></a></div>
+                                                    <div class="hover-overlay"></div>
+                                                    <div class="listing-content clearfix">
+                                                        <div class="listing-meta-cat">
+                                                            <a class="bgyallow-1 c333" href="#">Fitness</a>
+                                                        </div>
+                                                        <div class="listing-title">
+                                                            <h6><a href="single-listing.html">Best Car For Sale</a></h6>
+                                                        </div>
+                                                        <div class="listing-location pull-left"><!-- location-->
+                                                            <a href="#"><i class="fa fa-map-marker"></i>new york city</a>
+                                                        </div><!-- location end-->
+                                                        <div class="star-rating pull-right"><!-- rating-->
+                                                            <div class="score-callback" data-score="5"></div>
+                                                        </div><!-- rating end-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.ITEM -->
+                                        <div class="item col-md-4 col-sm-6 col-xs-12"><!-- .ITEM -->
+                                            <div class="listing-item clearfix">
+                                                <div class="figure">
+                                                    <img src="images/listings/270x250/04.jpg" alt="feature item"/>
+                                                    <div class="item-love"><a href="#"><i class="fa fa-heart-o"></i><i class="fa fa-heart "></i></a></div>
+                                                    <div class="hover-overlay"></div>
+                                                    <div class="listing-content clearfix">
+                                                        <div class="listing-meta-cat">
+                                                            <a class="bgyallow-1 c333" href="#">Fitness</a>
+                                                        </div>
+                                                        <div class="listing-title">
+                                                            <h6><a href="single-listing.html">Best Car For Sale</a></h6>
+                                                        </div>
+                                                        <div class="listing-location pull-left"><!-- location-->
+                                                            <a href="#"><i class="fa fa-map-marker"></i>new york city</a>
+                                                        </div><!-- location end-->
+                                                        <div class="star-rating pull-right"><!-- rating-->
+                                                            <div class="score-callback" data-score="5"></div>
+                                                        </div><!-- rating end-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.ITEM -->
+                                        <div class="item col-md-4 col-sm-6 col-xs-12"><!-- .ITEM -->
+                                            <div class="listing-item clearfix">
+                                                <div class="figure">
+                                                    <img src="images/listings/270x250/05.jpg" alt="feature item"/>
+                                                    <div class="item-love"><a href="#"><i class="fa fa-heart-o"></i><i class="fa fa-heart "></i></a></div>
+                                                    <div class="hover-overlay"></div>
+                                                    <div class="listing-content clearfix">
+                                                        <div class="listing-meta-cat">
+                                                            <a class="bgyallow-1 c333" href="#">Fitness</a>
+                                                        </div>
+                                                        <div class="listing-title">
+                                                            <h6><a href="single-listing.html">Best Car For Sale</a></h6>
+                                                        </div>
+                                                        <div class="listing-location pull-left"><!-- location-->
+                                                            <a href="#"><i class="fa fa-map-marker"></i>new york city</a>
+                                                        </div><!-- location end-->
+                                                        <div class="star-rating pull-right"><!-- rating-->
+                                                            <div class="score-callback" data-score="5"></div>
+                                                        </div><!-- rating end-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.ITEM -->
+                                        <div class="item col-md-4 col-sm-6 col-xs-12"><!-- .ITEM -->
+                                            <div class="listing-item clearfix">
+                                                <div class="figure">
+                                                    <img src="images/listings/270x250/06.jpg" alt="feature item"/>
+                                                    <div class="item-love"><a href="#"><i class="fa fa-heart-o"></i><i class="fa fa-heart "></i></a></div>
+                                                    <div class="hover-overlay"></div>
+                                                    <div class="listing-content clearfix">
+                                                        <div class="listing-meta-cat">
+                                                            <a class="bgyallow-1 c333" href="#">Fitness</a>
+                                                        </div>
+                                                        <div class="listing-title">
+                                                            <h6><a href="single-listing.html">Best Car For Sale</a></h6>
+                                                        </div>
+                                                        <div class="listing-location pull-left"><!-- location-->
+                                                            <a href="#"><i class="fa fa-map-marker"></i>new york city</a>
+                                                        </div><!-- location end-->
+                                                        <div class="star-rating pull-right"><!-- rating-->
+                                                            <div class="score-callback" data-score="5"></div>
+                                                        </div><!-- rating end-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.ITEM -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- content end -->
+            </div><!-- row end -->
+        </div>
+    </section>
+
+
+{% endblock %}
