@@ -8,7 +8,7 @@ import hashlib
 import json
 
 app = Flask(__name__)
-CLIENT_ID = '260923875640-m7otrchquhoafo8p8m9c447qqfn7s1q4.apps.googleusercontent.com'
+CLIENT_ID = 'YOU_APP_ID_HERE'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///itemsCatalog.db'
 db.init_app(app)
 
