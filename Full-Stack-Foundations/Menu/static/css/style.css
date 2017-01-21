@@ -55,6 +55,10 @@ article, aside, canvas, details, embed, figure, figcaption, footer, header, hgro
     vertical-align: baseline;
 }
 
+pre{
+    white-space: pre-line;background: transparent;
+}
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
     display: block;
@@ -1837,7 +1841,6 @@ a.toolbar-new-listing {
 
 .listview .listing-item .listing-content.list-style-content {
     float: left;
-    max-width: calc(100% - 270px);
     padding: 0 0 0 30px;
 }
 

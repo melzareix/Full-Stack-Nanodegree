@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, \
-    session, make_response
+    session, make_response, abort
 from database_models import Category, Item, db, User
 from oauth2client import client, crypt
 import httplib2
@@ -17,6 +17,14 @@ CLIENT_ID = '260923875640-m7otrchquhoafo8p8m9c447qqfn7s1q4.apps.googleuserconten
 @app.before_first_request
 def create_database():
     db.create_all()
+
+
+@app.before_request
+def csrf_protect():
+    if request.method == 'POST':
+        token = session.pop('_csrf_token', None)
+        if not token or token != request.form.get('_csrf_token'):
+            abort(403)
 
 
 @app.route('/')
@@ -335,6 +343,14 @@ def user_exists(user_id):
         return True
 
 
+def generate_csrf():
+    if '_csrf_token' not in session:
+        session['_csrf_token'] = hashlib.sha256(os.urandom(1024)).hexdigest()
+    return session['_csrf_token']
+
+
 if __name__ == '__main__':
     app.secret_key = 'secret_key'
+    app.jinja_env.globals['csrf_token'] = generate_csrf
+    app.jinja_env.auto_reload = True
     app.run(debug=True)

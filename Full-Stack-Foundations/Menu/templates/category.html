@@ -36,18 +36,16 @@
                                 <div id="latest-listing" class="tab-pane active">
                                     <div class="listing-wrapper style-2 row">
                                         {% for item in category.items %}
-                                            <div class="item col-md-4 col-sm-6 col-xs-12"><!-- .ITEM -->
+                                            <div class="item col-md-12 col-sm-6 col-xs-12"><!-- .ITEM -->
                                                 <div class="listing-item shadow-1 clearfix">
 
                                                     <div class="listing-content list-style-content clearfix">
-                                                        <div class="listing-meta-cat">
-                                                            <a class="bgyallow-1" href="#"><i class="fa fa-heart"></i></a>
-                                                        </div>
                                                         <div class="listing-title">
                                                             <h6>{{ item.name }}</h6>
                                                         </div>
-                                                        <div class="listing-disc">
-                                                            <p>{{ item.description }}</p>
+                                                        <hr>
+                                                        <div class="listing-disc" style="overflow: hidden">
+                                                            <pre>{{ item.description }}</pre>
                                                         </div>
 
                                                     </div>

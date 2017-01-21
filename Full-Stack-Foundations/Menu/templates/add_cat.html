@@ -24,6 +24,8 @@
                             <input class="form-field submit bgblue-1"
                                    type="submit" value="Add Category"/>
                         </div>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+
                     </form>
                 </div>
             </div>
