@@ -4,13 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="user-scalable = yes"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description"
-          content="Listing - Directory Listing HTML Template">
-    <meta name="keywords"
-          content="Listing,HTML,CSS,Directory,blog,business,corporate,clean,responsive">
-    <meta name="author" content="Muqadass Aleem, Muammad Asif">
-
-    <title>Listing - Directory Listing HTML Template</title>
+    <title>The Ultimate Item Catalogue</title>
 
     <!--================================FAVICON================================-->
 
@@ -89,8 +83,11 @@
                                    class="">Home</a></li>
                             <li><a href="{{ url_for('view_categories') }}"
                                    class="">Categories</a></li>
-                            <li><a href="index.html" class="">Signup</a></li>
-                            <li><a href="index.html" class="">Login</a></li>
+                            {% if is_authenticated %}
+                                <li><a href="{{ url_for('logout') }}" class="">Logout</a></li>
+                            {% else %}
+                                <li><a href="{{ url_for('login') }}" class="">Login</a></li>
+                            {% endif %}
                             <li><span></span></li>
                         </ul>
                     </nav>
@@ -135,111 +132,7 @@
         </div>
     </footer>
 </div>
-<!--================================MODAL WINDOWS FOR REGISTER AND LOGIN FORMS ===========================================-->
-<!-- Modal login form -->
-<div class="modal fade" id="login" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="listing-modal-1 modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"
-                        aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel"> LOGIN</h4>
-            </div>
-            <div class="modal-body">
-                <div class=" listing-login-form">
-                    <form action="#">
-                        <div class="listing-form-field">
-                            <i class="fa fa-user blue-1"></i>
-                            <input class="form-field bgwhite" type="text"
-                                   name="user_name" placeholder="username"/>
-                        </div>
-                        <div class="listing-form-field">
-                            <i class="fa fa-lock blue-1"></i>
-                            <input class="form-field bgwhite" type="password"
-                                   name="user_pass" placeholder="password"/>
-                        </div>
-                        <div class="listing-form-field clearfix margin-top-20 margin-bottom-20">
-                            <input type="checkbox" id="checkbox-1-1"
-                                   class="regular-checkbox"/><label
-                                for="checkbox-1-1"></label>
-                            <label class="checkbox-lable">Remember me</label>
-                            <a href="#">forgot password?</a>
-                        </div>
-                        <div class="listing-form-field">
-                            <input class="form-field submit bgblue-1"
-                                   type="submit" value="login"/>
-                        </div>
-                    </form>
-                    <div class="bottom-links">
-                        <p>not a member?<a href="#">create account</a></p>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<!-- Modal registration form -->
-<div class="modal fade" id="register" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="listing-modal-1 modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"
-                        aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel2">registration</h4>
-            </div>
-            <div class="modal-body">
-                <div class=" listing-register-form">
-                    <form action="#">
-                        <div class="listing-form-field">
-                            <input class="form-field bgwhite" type="text"
-                                   name="user_name" placeholder="name"/>
-                        </div>
-                        <div class="listing-form-field">
-                            <input class="form-field bgwhite" type="email"
-                                   name="user_email" placeholder="email"/>
-                        </div>
-                        <div class="listing-form-field">
-                            <input class="form-field bgwhite" type="password"
-                                   name="user_password"
-                                   placeholder="password"/>
-                        </div>
-                        <div class="listing-form-field">
-                            <input class="form-field bgwhite" type="password"
-                                   name="user_confirm_password"
-                                   placeholder="confirm password"/>
-                        </div>
-                        <div class="listing-form-field clearfix margin-top-20 margin-bottom-20">
-                            <input type="checkbox" id="checkbox-1-2"
-                                   class="regular-checkbox"/><label
-                                for="checkbox-1-2"></label>
-                            <label class="checkbox-lable">i agree with</label>
-                            <a href="#">terms & conditions</a>
-                        </div>
-                        <div class="listing-form-field">
-                            <input class="form-field submit bgblue-1"
-                                   type="submit" value="create account"/>
-                        </div>
-                    </form>
-                    <div class="bottom-links">
-                        <p>login with social network</p>
-                        <div class="listing-form-social">
-                            <ul>
-                                <li><a class=" bgblue-4 white" href="#"><i
-                                        class="fa fa-facebook"></i></a></li>
-                                <li><a class=" bgblue-1 white" href="#"><i
-                                        class="fa fa-twitter"></i></a></li>
-                                <li><a class=" bgred-2 white" href="#"><i
-                                        class="fa fa-google-plus"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+
 <!--================================JQuery===========================================-->
 
 <script type="text/javascript"
@@ -258,20 +151,6 @@
 <script type="text/javascript"
         src="{{ url_for('static',filename='js/menu.js') }}"></script>
 
-<!--================================SLIDER REVOLUTION===========================================-->
-
-<script type="text/javascript"
-        src="{{ url_for('static',filename='assets/revolution_slider/js/revolution-slider-tool.js') }}"></script>
-<script type="text/javascript"
-        src="{{ url_for('static',filename='assets/revolution_slider/js/revolution-slider.js') }}"></script>
-
-
-<!--================================OWL CARESOUL=============================================-->
-
-<script src="{{ url_for('static',filename='js/owl.carousel.js') }}"></script>
-<script src="{{ url_for('static',filename='js/triger.js') }}"
-        type="text/javascript"></script>
-
 <!--================================FunFacts Counter===========================================-->
 
 <script src="{{ url_for('static',filename='js/jquery.countTo.js') }}"></script>
@@ -286,51 +165,6 @@
 <script type="text/javascript"
         src="{{ url_for('static',filename='js/jquery.waypoints.min.js') }}"></script>
 <!-- Countdown JS FILE -->
-
-<!--================================RATINGS===========================================-->
-
-<script src="{{ url_for('static',filename='js/jquery.raty-fa.js') }}"></script>
-<script src="{{ url_for('static',filename='js/rate.js') }}"></script>
-
-<!--================================ testimonial ===========================================-->
-<script id="img-wrapper-tmpl" type="text/x-jquery-tmpl">
-
-			<div class="rg-image-wrapper">
-				<div class="rg-image"></div>
-				<div class="rg-caption-wrapper">
-					<div class="rg-caption" style="display:none;">
-						<p></p>
-						<h5></h5>
-						<div class="caption-metas">
-							<p class="position"></p>
-							<p class="orgnization"></p>
-						</div>
-					</div>
-				</div>
-				<div class="clear"></div>
-			</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</script>
-<script type="text/javascript"
-        src="{{ url_for('static',filename='assets/testimonial/js/jquery.tmpl.min.js') }}"></script>
-<script type="text/javascript"
-        src="{{ url_for('static',filename='assets/testimonial/js/jquery.elastislide.js') }}"></script>
-<script type="text/javascript"
-        src="{{ url_for('static',filename='assets/testimonial/js/gallery.js') }}"></script>
 
 <!--================================custom script===========================================-->
 

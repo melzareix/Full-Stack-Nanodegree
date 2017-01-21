@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!--================================PAGE TITLE==========================================-->
+    <div class="page-title-wrap padding-top-30 margin-bottom-10">
+        <!-- section title -->
+        <div class="container">
+            <div class="pagetitle-text">
+                <h4 class="white">LOGIN</h4>
+            </div>
+        </div>
+    </div><!-- section title end -->
+
+    {{ super() }}
+
+    <section class="categories-section padding-bottom-40">
+        <div class="container"><!-- section container -->
+            <div class="modal-body bg-white">
+                <h4>Login options</h4>
+                <br/>
+                <div class="btn-2"><a style="background-color: #f44336"
+                                      href="{{ url_for('glogin') }}">Google</a></div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+{% endblock %}

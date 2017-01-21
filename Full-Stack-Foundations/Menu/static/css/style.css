@@ -2267,14 +2267,16 @@ a.toolbar-new-listing {
     text-align: center;
 }
 
-.btn-2{
+.btn-2 {
     text-align: center;
+    margin-bottom:10px;
 }
-.btn-2 a{
+
+.btn-2 a {
     border-radius: 2px;
-    color:#fff;
+    color: #fff;
     background-color: #333;
-    width:100%;
+    width: 100%;
     display: inline-block;
     font-size: 14px;
     font-weight: 400;
@@ -2284,6 +2286,19 @@ a.toolbar-new-listing {
     text-align: center;
     text-transform: uppercase;
 }
+
+.crud-btn {
+    font-size: 18px;
+    background-color: #ebc131;
+    padding: 16px 50px;
+    border-radius: 20px;
+    color: #fff;
+}
+
+.crud-btn:hover {
+    color: #333;
+}
+
 .btn-1 a {
     border-radius: 25px;
     display: inline-block;
@@ -3163,7 +3178,17 @@ a.toolbar-new-listing {
 --------------------------------------------------------------------------------------------------------------------------------
 */
 
+body {
+    margin-bottom: 60px;
+}
+
 .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #f5f5f5;
 }
 
 .footer-copyright {
@@ -4137,6 +4162,7 @@ a.toolbar-new-listing {
     box-shadow: none;
     width: 100%;
 }
+
 .listing-form-field .checkbox {
 }
 
