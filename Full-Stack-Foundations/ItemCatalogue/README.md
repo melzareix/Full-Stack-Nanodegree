@@ -4,7 +4,7 @@ developing an **secure** Item catalog App with full CRUD operations,
 Oauth2 login system, using **Flask Framework**.
 
 ### How to Use
-- 
+
 - The App includes `requirements.txt` file, install the dependencies using pip.
     
     `pip install -r /path/to_project/requirements.txt`
