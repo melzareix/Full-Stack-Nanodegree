@@ -6,9 +6,10 @@ import httplib2
 import os
 import hashlib
 import json
+from functools import wraps
 
 app = Flask(__name__)
-CLIENT_ID = 'YOU_APP_ID_HERE'
+CLIENT_ID = '260923875640-m7otrchquhoafo8p8m9c447qqfn7s1q4.apps.googleusercontent.com'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///itemsCatalog.db'
 db.init_app(app)
 
@@ -34,6 +35,16 @@ def csrf_protect():
         token = session.pop('_csrf_token', None)
         if not token or token != request.form.get('_csrf_token'):
             abort(403)
+
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not is_user_authenticated():
+            flash('You must be logged in to access that page.')
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 def is_user_authenticated():
@@ -90,11 +101,8 @@ def view_category(cat_id):
 
 
 @app.route('/cats/new', methods=['GET', 'POST'])
+@login_required
 def add_cat():
-    if not is_user_authenticated():
-        flash('You must be logged in to access that page.')
-        return redirect(url_for('login'))
-
     if request.method == 'GET':
         return render_template('add_cat.html', solid='solid')
     cat_name = request.form.get('cat_name')
@@ -111,11 +119,8 @@ def add_cat():
 
 
 @app.route('/cats/<int:cat_id>/del')
+@login_required
 def del_cat(cat_id):
-    if not is_user_authenticated():
-        flash('You must be logged in to access that page.')
-        return redirect(url_for('login'))
-
     cat = Category.query.filter_by(id=cat_id).first()
     if cat.user_id != session['g_userID']:
         flash('You are not authorized to perform this action.')
@@ -132,11 +137,8 @@ def del_cat(cat_id):
 
 
 @app.route('/cats/<int:cat_id>/edit', methods=['GET', 'POST'])
+@login_required
 def edit_cat(cat_id):
-    if not is_user_authenticated():
-        flash('You must be logged in to access that page.')
-        return redirect(url_for('login'))
-
     category = Category.query.filter_by(id=cat_id).first()
     if category.user_id != session['g_userID']:
         flash('You are not authorized to perform this action.')
@@ -169,11 +171,8 @@ def view_item(cat_id, item_id):
 
 
 @app.route('/items/new', methods=['GET', 'POST'])
+@login_required
 def add_item():
-    if not is_user_authenticated():
-        flash('You must be logged in to access that page.')
-        return redirect(url_for('login'))
-
     categories = Category.query.all()
     if request.method == 'GET':
         return render_template('add_item.html', solid='solid',
@@ -205,11 +204,8 @@ def add_item():
 
 
 @app.route('/items/<int:cat_id>/<int:item_id>/edit', methods=['GET', 'POST'])
+@login_required
 def edit_item(cat_id, item_id):
-    if not is_user_authenticated():
-        flash('You must be logged in to access that page.')
-        return redirect(url_for('login'))
-
     item = Item.query.filter_by(cat_id=cat_id, id=item_id).first()
 
     if item.user_id != session['g_userID']:
@@ -247,11 +243,8 @@ def edit_item(cat_id, item_id):
 
 
 @app.route('/items/<int:cat_id>/<int:item_id>/delete')
+@login_required
 def del_item(cat_id, item_id):
-    if not is_user_authenticated():
-        flash('You must be logged in to access that page.')
-        return redirect(url_for('login'))
-
     item = Item.query.filter_by(cat_id=cat_id, id=item_id).first()
 
     if item.user_id != session['g_userID']:
@@ -294,7 +287,7 @@ def glogin():
 @app.route('/goauth2callback')
 def google_callback():
     flow = client.flow_from_clientsecrets(
-        'client_secret.json',
+        'client_secrets.json',
         scope='email', redirect_uri=url_for('google_callback', _external=True))
 
     if 'code' not in request.args:
@@ -346,24 +339,22 @@ def google_callback():
 
 
 @app.route('/logout')
+@login_required
 def logout():
-    if not is_user_authenticated():
-        redirect(url_for('login'))
-    else:
-        try:
-            credentials = client.OAuth2Credentials.from_json(
-                session['credentials'])
-            credentials.revoke(httplib2.Http())
-            del session['credentials']
-            del session['g_accessToken']
-            del session['g_userID']
-            del session['g_email']
-            flash('You are now logged out.')
-            return redirect(url_for('view_categories'))
-        except Exception, e:
-            flash('An error occurred with logout.')
-            flash(str(e))
-            return redirect(url_for('view_categories'))
+    try:
+        credentials = client.OAuth2Credentials.from_json(
+            session['credentials'])
+        credentials.revoke(httplib2.Http())
+        del session['credentials']
+        del session['g_accessToken']
+        del session['g_userID']
+        del session['g_email']
+        flash('You are now logged out.')
+        return redirect(url_for('view_categories'))
+    except Exception, e:
+        flash('An error occurred with logout.')
+        flash(str(e))
+        return redirect(url_for('view_categories'))
 
 
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
