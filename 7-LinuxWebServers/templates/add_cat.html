@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!--================================PAGE TITLE==========================================-->
+    <div class="page-title-wrap padding-top-30 margin-bottom-10"><!-- section title -->
+        <div class="container">
+            <div class="pagetitle-text">
+                <h4 class="white">Add Category</h4>
+            </div>
+        </div>
+    </div><!-- section title end -->
+
+    {{ super() }}
+    <section class="categories-section padding-bottom-40">
+        <div class="container"><!-- section container -->
+            <div class="modal-body">
+                <div class=" listing-login-form">
+                    <form method="post">
+                        <div class="listing-form-field">
+                            <input class="form-field bgwhite" type="text"
+                                   name="cat_name"
+                                   placeholder="Category name"/>
+                        </div>
+                        <div class="listing-form-field">
+                            <input class="form-field submit bgblue-1"
+                                   type="submit" value="Add Category"/>
+                        </div>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </section>
+{% endblock %}
