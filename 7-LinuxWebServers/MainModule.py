@@ -10,7 +10,9 @@ from functools import wraps
 
 app = Flask(__name__)
 CLIENT_ID = '260923875640-m7otrchquhoafo8p8m9c447qqfn7s1q4.apps.googleusercontent.com'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://catalogp:hello@localhost:5432/ItemCatalogue'
+app.config['SQLALCHEMY_DATABASE_URI'] =\
+    'postgresql://catuser:FMLJsXCjuq7QZveCxx4YFMLJsXCjuq7QZveCxx4Y' \
+    '@localhost:5432/ItemsCatalogue'
 db.init_app(app)
 
 
