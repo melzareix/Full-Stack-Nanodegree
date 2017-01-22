@@ -10,9 +10,9 @@ from functools import wraps
 
 app = Flask(__name__)
 CLIENT_ID = '260923875640-m7otrchquhoafo8p8m9c447qqfn7s1q4.apps.googleusercontent.com'
-app.config['SQLALCHEMY_DATABASE_URI'] =\
-    'postgresql://catuser:FMLJsXCjuq7QZveCxx4YFMLJsXCjuq7QZveCxx4Y' \
-    '@localhost:5432/ItemsCatalogue'
+app.config['SQLALCHEMY_DATABASE_URI'] = \
+    'postgresql://catalog_user:FMLJsXCjuq7QZveCxx4Y' \
+    '@localhost:5432/itemcatalogue'
 db.init_app(app)
 
 
@@ -289,7 +289,7 @@ def glogin():
 @app.route('/goauth2callback')
 def google_callback():
     flow = client.flow_from_clientsecrets(
-        'client_secrets.json',
+        '/home/grader/Full-Stack-Nanodegree/7-LinuxWebServers/client_secrets.json',
         scope='email', redirect_uri=url_for('google_callback', _external=True))
 
     if 'code' not in request.args:

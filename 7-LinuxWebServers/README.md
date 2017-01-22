@@ -1,16 +1,46 @@
-### Full Stack Foundations
-This project is a part of Udacity's nanodegree program,
-developing an **secure** Item catalog App with full CRUD operations,
-Oauth2 login system, using **Flask Framework**.
+### Configuring Linux Webservers
+This project is a part of Udacity's nanodegree program.
 
+Deploying a Flask app to Amazon AWS on an Ubuntu 14.04 server,
+   configuring the server and securing it.
+   
 ### How to Use
 
-- The App includes `requirements.txt` file, install the dependencies using pip.
-    
-    `pip install -r /path/to_project/requirements.txt`
-- Change the `client_secret.json` file and CLIENT_ID in `MainModule.py` to match your Google App - to use GLogin Oauth2.
+- The project can be accessed from : http://ec2-50-112-217-103.us-west-2.compute.amazonaws.com/
 
-- Run the `MainModule`
+- To access through ssh, the RSA file contents is provided in the instruction notes.
+
+    `ssh grader@50.112.217.103 -i ~/.ssh/grader -p 2200`
+
+- **Configurations**
+    - Pass-phrase : `grader`.
+    - DB Username : catalog_user - With full privileges -
+    another user with restricted privileges named `catalog`.
+   
+    - DB Password : `FMLJsXCjuq7QZveCxx4Y`.
     
-    `cd /path/to_project/`<br />
-    `python MainModule.py`
+    - DB Name :   `itemcatalogue`.
+    
+- **Configuration changed**
+    - Created new user `grader` with `sudo privileges`.
+    - Changed Timezone to `UTC`.
+    - Installed and updated the required software.
+    - Changed SSH port to `2200`.
+    - Configured UFW to allow connections only on SSH (port 2200),      HTTP (port 80), and NTP (port 123).
+    - Secured PostgreSQL.
+    - Deployed The ItemCatalogue developed in the previous course.
+    
+- **Software Installed**
+    - Ubuntu 14.04 Trusty
+    - Apache2
+    - mod_wsgi
+    - python
+    - pip
+    - Flask
+    - PostgreSQL
+    - Flask-SQLAlchemy
+    - SQLAlchemy
+    - Jinja2
+    - oauth2client
+    - httplib2
+    - psycopg2
