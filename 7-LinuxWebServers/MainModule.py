@@ -10,7 +10,7 @@ from functools import wraps
 
 app = Flask(__name__)
 CLIENT_ID = '260923875640-m7otrchquhoafo8p8m9c447qqfn7s1q4.apps.googleusercontent.com'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///itemsCatalog.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://catalogp:hello@localhost:5432/ItemCatalogue'
 db.init_app(app)
 
 
@@ -22,8 +22,7 @@ def create_database():
     """
     Create the database file.
     """
-    if not os.path.exists('itemsCatalog.db'):
-        db.create_all()
+    db.create_all()
 
 
 @app.before_request
