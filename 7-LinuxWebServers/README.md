@@ -29,6 +29,8 @@ Deploying a Flask app to Amazon AWS on an Ubuntu 14.04 server,
     - Configured UFW to allow connections only on SSH (port 2200),      HTTP (port 80), and NTP (port 123).
     - Secured PostgreSQL.
     - Deployed The ItemCatalogue developed in the previous course.
+    - Although not applicaple to current git structure, Prevented
+    access to `.git` through a custom `.htaccess` rules.
     
 - **Software Installed**
     - Ubuntu 14.04 Trusty
