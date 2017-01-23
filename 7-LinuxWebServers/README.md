@@ -16,7 +16,7 @@ Deploying a Flask app to Amazon AWS on an Ubuntu 14.04 server,
     - Pass-phrase : `grader`.
     - DB Username : catalog_user - With full privileges -
     another user with restricted privileges named `catalog`.
-   
+    - Grader password : `FMLJsXCjuq7QZveCxx4Y`.
     - DB Password : `FMLJsXCjuq7QZveCxx4Y`.
     
     - DB Name :   `itemcatalogue`.
