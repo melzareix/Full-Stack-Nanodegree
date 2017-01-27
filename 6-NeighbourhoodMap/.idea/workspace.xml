@@ -31,21 +31,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="514">
-              <caret line="73" column="2" lean-forward="false" selection-start-line="73" selection-start-column="2" selection-end-line="73" selection-end-column="2" />
+            <state relative-caret-position="1533">
+              <caret line="73" column="13" lean-forward="false" selection-start-line="73" selection-start-column="11" selection-end-line="73" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="205" column="53" lean-forward="false" selection-start-line="205" selection-start-column="38" selection-end-line="205" selection-end-column="53" />
+            <state relative-caret-position="170">
+              <caret line="207" column="3" lean-forward="true" selection-start-line="203" selection-start-column="0" selection-end-line="207" selection-end-column="3" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -66,14 +66,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>addres</find>
-      <find>hamb</find>
-      <find>infowind</find>
-      <find>infoWindow</find>
-      <find>infoWindowContent</find>
-      <find>DOmA</find>
-      <find>doMagic</find>
-      <find>infoWind</find>
       <find>marker</find>
       <find>infowi</find>
       <find>...</find>
@@ -96,6 +88,14 @@
       <find>nav</find>
       <find>media</find>
       <find>half_w</find>
+      <find>sidebar</find>
+      <find>sidebar_sho</find>
+      <find>toggleCla</find>
+      <find>red</find>
+      <find>m_side</find>
+      <find>.sideba</find>
+      <find>50</find>
+      <find>read</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -283,12 +283,12 @@
       <workItem from="1485424403647" duration="5039000" />
       <workItem from="1485460282934" duration="5009000" />
       <workItem from="1485509180866" duration="2404000" />
-      <workItem from="1485516139200" duration="24013000" />
+      <workItem from="1485516139200" duration="24840000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36465000" />
+    <option name="totallyTimeSpent" value="37292000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="728" extended-state="0" />
@@ -339,8 +339,7 @@
         <state relative-caret-position="189">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
-            <element signature="e#779#950#0" expanded="false" />
-            <element signature="e#952#1092#0" expanded="false" />
+            <element signature="e#925#1096#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -395,21 +394,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/app.js">
+    <entry file="file://$PROJECT_DIR$/css/main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="205" column="53" lean-forward="false" selection-start-line="205" selection-start-column="38" selection-end-line="205" selection-end-column="53" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state relative-caret-position="1533">
+          <caret line="73" column="13" lean-forward="false" selection-start-line="73" selection-start-column="11" selection-end-line="73" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/main.css">
+    <entry file="file://$PROJECT_DIR$/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="514">
-          <caret line="73" column="2" lean-forward="false" selection-start-line="73" selection-start-column="2" selection-end-line="73" selection-end-column="2" />
-          <folding />
+        <state relative-caret-position="170">
+          <caret line="207" column="3" lean-forward="true" selection-start-line="203" selection-start-column="0" selection-end-line="207" selection-end-column="3" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

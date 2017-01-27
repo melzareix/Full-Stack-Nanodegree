@@ -203,9 +203,25 @@ function createInfoWindow(location) {
  */
 $('.clk').on('click', function (e) {
     e.stopPropagation();
-    $('.main-container').toggleClass('m_sidebar_shown');
+    $('.main-container').toggleClass('sidebar_shown');
     $('.sidebar').toggleClass('sidebar_shown');
 });
+
+$(document).ready(function () {
+    // run test on initial page load
+    checkSize();
+
+    // run test on resize of the window
+    $(window).resize(checkSize);
+});
+
+//Function to the css rule
+function checkSize() {
+    if ($("nav").css("display") == 'none') {
+        $('.main-container').removeClass('sidebar_shown');
+        $('.sidebar').removeClass('sidebar_shown');
+    }
+}
 
 /*
  * @description The Starting Point
