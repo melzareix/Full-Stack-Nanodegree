@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Neighbourhood Map</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+</head>
+<body>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <aside class="col-xs-6 col-md-3 sidebar fill">
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <form action="">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Filter locations ...">
+                        </div>
+                    </form>
+
+                    <ul class="list-unstyled">
+                        <li><a href="#">1246 Everett Avenue</a></li>
+                        <li><a href="#">7105 Plover Circle</a></li>
+                        <li><a href="#">1022 Bridges Dr</a></li>
+                        <li><a href="#">7117 Deer Hollow Dr</a></li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <div class="main-container col-xs-12 col-md-9">
+            <div class="row">
+                <nav class="col-xs-12 col-md-12 navbar navbar-default">
+                    <div class="container-fluid">
+                        <a class="clk" href="#"><i class="ham-menu fa fa-bars" aria-hidden="true"></i></a>
+                    </div>
+                </nav>
+
+                <main class="col-xs-12 col-md-12 no-padding">
+                    <div id="map" class="fill">
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('.clk').on('click', function (e) {
+        e.stopPropagation();
+        $('.main-container').toggleClass('m_sidebar_shown');
+        $('.sidebar').toggleClass('sidebar_shown');
+    });
+
+</script>
+<script>
+    function initMap() {
+        var uluru = {lat: -25.363, lng: 131.044};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 4,
+            center: uluru
+        });
+        var marker = new google.maps.Marker({
+            position: uluru,
+            map: map
+        });
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCo_G_fwCoz1yedhSxnWR1Yj6rRy04l-_w&callback=initMap"
+        async defer></script>
+</body>
+</html>
