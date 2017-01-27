@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>My Neighbourhood Map</title>
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/main.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="bower_components/knockout/dist/knockout.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
 
 
 <div class="container-fluid">
     <div class="row">
-        <aside class="col-xs-6 col-md-3 sidebar fill">
+        <aside class="col-xs-6 col-md-3 sidebar">
             <div class="row">
                 <div class="col-md-12 col-xs-12">
                     <form action="">
@@ -44,34 +45,16 @@
                 </nav>
 
                 <main class="col-xs-12 col-md-12 no-padding">
-                    <div id="map" class="fill">
+                    <div id="map">
                     </div>
                 </main>
             </div>
         </div>
     </div>
 </div>
-<script>
-    $('.clk').on('click', function (e) {
-        e.stopPropagation();
-        $('.main-container').toggleClass('m_sidebar_shown');
-        $('.sidebar').toggleClass('sidebar_shown');
-    });
 
-</script>
-<script>
-    function initMap() {
-        var uluru = {lat: -25.363, lng: 131.044};
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 4,
-            center: uluru
-        });
-        var marker = new google.maps.Marker({
-            position: uluru,
-            map: map
-        });
-    }
-</script>
+
+<script src="js/app.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCo_G_fwCoz1yedhSxnWR1Yj6rRy04l-_w&callback=initMap"
         async defer></script>
 </body>

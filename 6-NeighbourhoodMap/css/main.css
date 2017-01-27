@@ -1,18 +1,20 @@
-
+/* Custom CSS */
 body {
     background-color: #373b3e;
-    color : black;;
+    color: black;;
 }
 
-a{
-    color:#333;
+a {
+    color: #333;
 }
+
 .navbar {
     border-radius: 0;
     margin-bottom: 0;
 }
 
 .main-container {
+    background-color: #eee;
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
 
@@ -89,16 +91,24 @@ aside li {
     border-bottom: 1px solid rgba(222, 222, 222, 0.2);
 }
 
-
-aside li a{
+aside li a {
     color: #dddfde;
 }
 
-aside li a:hover{
+aside li a:hover {
     color: #858585;
     text-decoration: none;
 }
 
-aside li a:active a:visited{
+aside li a:active a:visited {
     color: #dddfde;
+}
+
+#map {
+    height: 100%;
+}
+
+body, html, #map, .main-container, .container-fluid, .container-fluid .row, main{
+    min-height: 100%;
+    height: 100%;
 }
