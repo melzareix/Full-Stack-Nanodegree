@@ -4,7 +4,7 @@ body {
     color: black;;
 }
 
-a {
+a, a:visited, a:hover, a:active {
     color: #333;
 }
 
@@ -20,7 +20,7 @@ a {
 
 .ham-menu {
     font-size: 22px;
-    padding: 12px 10px 10px;
+    padding: 12px 10px 10px 0;
 }
 
 .sidebar {
@@ -91,7 +91,8 @@ aside li {
     border-bottom: 1px solid rgba(222, 222, 222, 0.2);
 }
 
-aside li a {
+aside li a,
+aside li a:visited{
     color: #dddfde;
 }
 
@@ -100,7 +101,7 @@ aside li a:hover {
     text-decoration: none;
 }
 
-aside li a:active a:visited {
+aside li a:active {
     color: #dddfde;
 }
 

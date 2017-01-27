@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Neighbourhood Map</title>
+    <title>Dubai Neighbourhood Map</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -22,15 +22,12 @@
                 <div class="col-md-12 col-xs-12">
                     <form action="">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Filter locations ...">
+                            <input data-bind="textInput: filterText" type="text" class="form-control" placeholder="Filter locations ...">
                         </div>
                     </form>
 
-                    <ul class="list-unstyled">
-                        <li><a href="#">1246 Everett Avenue</a></li>
-                        <li><a href="#">7105 Plover Circle</a></li>
-                        <li><a href="#">1022 Bridges Dr</a></li>
-                        <li><a href="#">7117 Deer Hollow Dr</a></li>
+                    <ul class="list-unstyled" data-bind="foreach: filteredLocations">
+                        <li><a href="#" data-bind="text: name, click: $parent.showItemInfo"></a></li>
                     </ul>
                 </div>
             </div>
@@ -53,9 +50,8 @@
     </div>
 </div>
 
-
+<script src="bower_components/alertifyjs/dist/js/alertify.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCo_G_fwCoz1yedhSxnWR1Yj6rRy04l-_w"></script>
 <script src="js/app.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCo_G_fwCoz1yedhSxnWR1Yj6rRy04l-_w&callback=initMap"
-        async defer></script>
 </body>
 </html>
