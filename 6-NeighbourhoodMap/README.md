@@ -11,5 +11,5 @@ map as you type them, and grabs the locations from **Foursquare**.
 ## How to use it
 You can use the app instantly by opening`index.html`.
 
-  - Live Demo : http://dubai-neighborhood.surge.sh/
+  - Live Preview : http://dubai-neighborhood.surge.sh/
   
